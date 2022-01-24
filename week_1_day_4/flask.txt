@@ -1,0 +1,58 @@
+Flask is a framework
+
+Flask does not care about file structure, it gives lots of options for setting up and connecting to database
+
+you can not have django 2 and django 3 installed at the same time on the same machine to use with python. 
+A virtual environment can be used to get around this. Typically with python in real world applications (using 3 projects 1 work 1 hobby 1 future would each have a different python install) you would be using a vitual environment
+
+we will use pipenv for our vitual environment tool
+
+create a separate virtual environment for each project we work on from now on
+
+pip install pipenv
+
+type pip3 list to check for install (maybe mac only?)
+
+creat flask folder
+pipenv install flask
+should creat virtual environment
+shows folder for environment on machine (generally dont need to mess with this)
+
+pipenv shell
+    activates virtual environment (hej_flask or whatever name of virtual each is) this proves its installed and running
+
+deactivate command turns off environment exit is the command
+
+Pipfile and Pipfile.lock will show up in VS code...dont change these or touch them. Config files for the vitual environment
+
+server.py(file name doesnt really matter but this is the most common name)
+
+from flask import Flask #from flask module import Flask class
+
+app = Flask(__name__)       #creating instance of Flask class and assigning to app. need double under name for "good reasons"
+
+# a route is a specific endpoint on a website that we access specific information from
+@app.route('/')#decorator is a function that modifies another function
+def index():        
+    return 'welcome 2 my webbed site :3'        #just return a string for now
+
+
+#has to go at bottom of page
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+python server.py    #entered into flask window
+
+server ip address is shown which is my computer only i can access
+typing it into the browser may have issues depending on computer spyware protection
+should show what we typed if it works
+
+names of functions used should be relative to what you are doing
+
+when using vs code and u save, the development server looks for changes and assumes you want it to run. 
+
+could run thru vs code however they advise against it
+
+
+wolfram alpha

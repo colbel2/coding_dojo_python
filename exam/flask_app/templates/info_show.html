@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>{{show.name}}</p>
+    <p>{{show.title}}</p>
+    <p>Network:{{show.network}}</p>
+    <p>Release Date: {{show.release_date}}</p>
+    <p>Description: {{show.description}}</p>
+    <p>Posted By:{{show.creator.first_name}} {{show.creator.last_name}}</p> 
+
+    {% if show.creator.id == session['user_id'] %}
+    <a href="/dashboard">All TV Shows</a>
+    <a href="users/logout">Logout</a>
+    {% endif %}
+</body>
+</html>

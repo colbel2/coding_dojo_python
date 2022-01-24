@@ -1,0 +1,57 @@
+create a folder to store everything in
+
+create a server.py file in that folder
+
+create a folder inside the folder you are working in and name it templates
+
+inside templates make an index.html file
+
+open the command prompt and navigate to the folder you want to work in
+cd .// will jump up a folder in the command window
+
+
+type 
+
+pip install pipenv
+
+then type
+
+python -m pipenv install flask flask-bcrypt pymysql
+
+
+to launch the virtual environment and access from browser type
+
+python -m pipenv shell
+
+to exit the environment type
+
+exit
+
+then type in python server.py to launch the browser
+
+once the environment is live you can acces it on a web browser by going to 
+
+localhost:5000/
+
+to build your server.py page:
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def sjfhdgh():
+    return jfdklahglks
+
+
+At the very bottom of the server.py page you must have 
+if __name__=="__main__":
+    app.run(debug=True)
+
+So if you want to link a html template you need the render_template at the top
+then in an @app.route you need to return render_template.
+
+@app.route('/')
+def hello():
+    return render_template("index.html")    #the string inside of render_template MUST be called whatever you named the HTML file
+

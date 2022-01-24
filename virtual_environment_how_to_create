@@ -1,0 +1,113 @@
+create a folder to store everything in
+
+create a server.py file in that folder
+
+create a folder inside the folder you are working in and name it templates
+
+inside templates make an index.html file
+
+open the command prompt and navigate to the folder you want to work in
+cd .// will jump up a folder in the command window
+
+
+type 
+
+pip install pipenv
+
+then type
+
+python -m pipenv install flask
+
+to launch the virtual environment and access from flask.app import _Body
+from flask.wrappers import JSONMixin
+from werkzeug.utils import format_string, html
+from browser type
+
+python -m pipenv shell
+
+to exit the environment type
+
+exit
+
+then type in python server.py to launch the browser
+
+once the environment is live you can acces it on a web browser by going to 
+
+localhost:5000/
+
+to build your server.py page:
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def sjfhdgh():
+    return jfdklahglks
+
+
+At the very bottom of the server.py page you must have 
+if __name__=="__main__":
+    app.run(debug=True)
+
+So if you want to link a html template you need the render_template at the top
+then in an @app.route you need to return render_template.
+
+@app.route('/')
+def hello():
+    return render_template("index.html")    #the string inside of render_template MUST be called whatever you named the HTML file
+
+If you want to link a second HTML you can and you can add things like variables to it.
+It is important whatever you name the variables in the server.py file you use in the HTML file.
+It would look like this in server.py
+
+@app.route('/hello/<string:banana>/<int:num>')
+def hello(banana,num):
+    return render_template("hello.html",banana=banana,num=num)
+
+#notice that the top line is the address you type into the browser.
+# string is looking for a word and num is looking for a number. it will then print those based on how we have HTML set up
+#the variable names muse be placed inside the function, in this case def hello(-,-)
+then when you return the variables you are telling them what they equal on the html. the first banana(or variable name) on the return line is what the HTML sheet is looking for and then the equals and second banana is what the server file is looking for to match
+
+and in HTML it could be something like this:
+
+<body>
+    <h1>this is the 2nd html document rendered</h1>
+    <h1>{{ banana }}</h1>
+    <h1>{{ num }}</h1>
+</body>
+
+lets say you wanted to repeat a phrase x number of times. Like our banana example.
+you could make a for loop in the html file to do so. it would look like this
+
+<body>
+    <h1>this is the 2nd html document rendered</h1>
+    <h1>{{ banana }}</h1>
+    <h1>{{ num }}</h1>
+
+    {% for i in range(0,num) %}
+        <p>Hello {{ banana }} </p>
+    {% endfor %}
+</body>
+
+Notice the curly {} brackets and the % modulus used. this is how we used python code in html
+you also have to end your for loop or if statement by saying {% endfor %}
+
+STATIC files: CSS JS
+flask needs a static folder to work with these files
+name the folder static, this should be the same level as templates folder
+    within this static folder you can either throw everything in it or create a separate sub folder for css and js etc.
+You will have to have an import(link) for every template you have
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+
+notice the 'static' is looking for static folder and the file name has css/style.css as we have the style sheet in its own folder
+
+Note: When using static files, your browser will likely cache them. If you are making changes in static files and they don't appear to be updating, do a hard refresh of the page in your browser: ctrl + shift + r (Windows)
+
+Post Requests are secure requests made to servers. can hide data being sent in a _Body
+this is done thru forms 
+
+
+pyhton -m pipenv install PyMySQL flask

@@ -1,0 +1,45 @@
+PK
+Primary Key - Check for ID
+
+NN
+Not Null - Check for ID, probably check for most columns made
+
+UQ
+Unique - Wouldnt worry too much abou this
+
+BIN
+Binary - Image or sound file
+
+UN 
+Unsigned - Check for ID (dont have to click for assignments) Keeps things not negative
+
+ZF
+Zero Fill
+
+AI
+Auto-increment - Check for ID.
+
+G
+Generated - table data is pulled from somewhere else. Not worry about
+
+Default/Expression
+Generally dont need to touch. If making a salary for example, you could put 40000 in this column as the starting salary for all employees. 
+
+created_at should have a Default/Expression of: NOW()
+updated_at should have a Default/Expression of: NOW() ON UPDATE NOW()
+
+One to One join
+SELECT * FROM customers 
+JOIN addresses ON addresses.id = customers.address_id;
+
+Or
+
+SELECT * FROM customers 
+JOIN addresses ON customers.address_id = addresses.id ;
+
+Or
+
+SELECT * FROM customers JOIN addresses ON customers.address_id = addresses.id ;
+
+They all do the same thing!
+

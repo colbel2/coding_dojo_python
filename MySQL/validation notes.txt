@@ -1,0 +1,144 @@
+at the top of the model file that will be using validation you must add 
+    from flask import flash
+
+
+@staticmethod
+def validate_***whatever you are validating***(***whatever you are validating***):
+    is_valid = True
+    if ***statement***
+        flash(***a string that says what the error is and what is needed for the response to be valid***)
+        is_valid = False
+    return is_valid
+
+NOTE: You can have as many if statements as needed for what you are doing.
+
+how does it get implemented?
+Go to the controller file
+
+example:
+@app.route('/create.,methods=['POST'])
+def create():
+    if not Burger.validate_burger(request.form):
+        return redirect('/')
+    data = {
+        "name":request.form['name],
+        "bun":request.form['bun']
+    }
+    Burger.save(data)
+    return redirect('/burgers')
+
+
+FULL EXAMPLE BELOW
+
+models/burger.py
+
+from flask import flash
+class Burger:
+    # Other Burger methods up yonder.
+    # Static methods don't have self or cls passed into the parameters.
+    # We do need to take in a parameter to represent our burger
+    @staticmethod
+    def validate_burger(burger):
+        is_valid = True # we assume this is true
+        if len(burger['name']) < 3:
+            flash("Name must be at least 3 characters.")
+            is_valid = False
+        if len(burger['bun']) < 3:
+            flash("Bun must be at least 3 characters.")
+            is_valid = False
+        if int(burger['calories']) < 200:
+            flash("Calories must be 200 or greater.")
+            is_valid = False
+        if len(burger['meat']) < 3:
+            flash("Bun must be at least 3 characters.")
+            is_valid = False
+        return is_valid
+
+
+controllers/burgers.py
+from flask_app.models.burger import Burger
+@app.route('/create', methods=['POST'])
+def create_burger():
+    # if there are errors:
+    # We call the staticmethod on Burger model to validate
+    if not Burger.validate_burger(request.form):
+        # redirect to the route where the burger form is rendered.
+        return redirect('/')
+    # else no errors:
+    Burger.save(request.form)
+    return redirect("/burgers")
+
+HTML
+
+{% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+    {% if messages %}                            <!-- check if there are any messages -->
+        {% for message in messages %}            <!-- loop through the messages -->
+            <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+Regular Expression aka regex
+
+Regex is a sequence of characters that defines a search pattern.
+
+This is an example of a python regex for matching an email address
+r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$'
+
+notice the @ then . which mimics an email address
+
+models/user.py
+
+import re	# the regex module
+# create a regular expression object that we'll use later   
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
+class User:
+    @staticmethod
+    def validate_user( user ):
+        is_valid = True
+        # test whether a field matches the pattern
+        if not EMAIL_REGEX.match(user['email']): 
+            flash("Invalid email address!")
+            is_valid = False
+        return is_valid
+
+controllers/users.py
+
+from flask_app.models.user import User
+@app.route('/register', methods=['POST'])
+def register():
+    if not User.validate_user(request.form):
+        # we redirect to the template with the form.
+        return redirect('/')
+    # ... do other things
+    return redirect('/dashboard')
+
+
+Bcrypt is used because it is slow. Makes it hard for a hacker to bruteforce their way thru dashboard
+Never directly store passwords in database
+Best way to protect passwords is to give each user a unique salt. 
+
+A salt is a random long string that we add to a users password before hashing and storing it in the database. 
+Hashing scrambles the data in such a way that it cannot be reversed. a hash value will always match the password.
+
+How to implement Bcrypt:
+
+when the shell is activated run the command
+
+
+python -m pipenv install flask-bcrypt
+
+
+inside the model file we will need to add:
+from flask_bcrypt import Bcrypt        
+bcrypt = Bcrypt(app)     # we are creating an object called bcrypt, 
+                         # which is made by invoking the function Bcrypt with our app as an argument
+
+
+To generate a hash, provide the password to be hashed as an argument
+bcrypt.generate_password_hash(password_string)
+
+To compare passwords, provide the hash as the first argument and the password to be checked as the second argument
+bcrypt.check_password_hash(hashed_password, password_string)
+
